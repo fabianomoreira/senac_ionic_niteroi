@@ -23,4 +23,31 @@ export class AlertaPage implements OnInit {
 
     mensagem.present();
   }
+
+  async exibirCustom(){
+    const mensagem = await this.alerta.create({
+      header: 'Mensagem',
+      message: 'Deseja realmente sair?',
+      buttons: ['ok', 'cancelar']
+    });
+
+    mensagem.present();
+  }
+
+  async exibirComplete(){
+    const mensagem = await this.alerta.create({
+      header: 'Confirma',
+      message: 'Confirma a gravação?',
+      buttons: [{text: 'ok',
+                 handler: () => {
+                  console.log('Vou gravar!');
+                 }},
+                {text: 'cancelar',
+                 handler: () => {
+                  console.log('Desista!!!');
+                 }}]
+    });
+
+    mensagem.present();
+  }
 }
