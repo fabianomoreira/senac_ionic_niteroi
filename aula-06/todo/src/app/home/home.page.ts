@@ -8,6 +8,12 @@ import { IonBackButtonDelegateDirective } from '@ionic/angular/directives/naviga
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  tasks = [
+    {description: 'Comprar pão'},
+    {description: 'Escovar os dentes'},
+    {description: 'Lavar a louça'},
+    {description: 'Lavar a roupa'}
+  ];
 
   constructor(private alertController: AlertController,
               private toastController: ToastController
@@ -52,7 +58,7 @@ export class HomePage {
 
       toast.present();
     } else {
-      console.log(newTask);
+      this.tasks.push({description: newTask});
     }
   }
 }
