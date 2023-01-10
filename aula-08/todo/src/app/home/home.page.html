@@ -4,10 +4,14 @@
       TODO
     </ion-title>
   </ion-toolbar>
+
+  <ion-toolbar color="danger">
+    <ion-searchbar [(ngModel)] = "searchValue"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-item-sliding *ngFor="let task of tasks">
+  <ion-item-sliding *ngFor="let task of tasks | filter: searchValue">
     <ion-item (click)="alterarStatus(task)">
       <ion-label *ngIf="task.done == false">{{task.description}}</ion-label>
       <ion-label *ngIf="task.done == true"><del>{{task.description}}</del></ion-label>
@@ -19,7 +23,7 @@
     </ion-item-options>      
   </ion-item-sliding>
 
-  <ion-title *ngIf="tasks.length == 0" (click)="arrayParaJson()">Sem tarefas!</ion-title>
+  <ion-title *ngIf="tasks.length == 0">Sem tarefas!</ion-title>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" (click)="showAdd()">

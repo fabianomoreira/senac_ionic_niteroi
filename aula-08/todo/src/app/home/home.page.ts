@@ -9,10 +9,13 @@ import { IonBackButtonDelegateDirective } from '@ionic/angular/directives/naviga
 })
 export class HomePage {
   tasks: any[] = [];
+  searchValue: string = '';
 
   constructor(private alertController: AlertController,
               private toastController: ToastController
-             ) {}
+             ) {
+                this.lerLocalStorage();
+             }
 
   async showAdd(){
     const alert = await this.alertController.create({
@@ -45,6 +48,8 @@ export class HomePage {
         this.tasks.splice(i, 1);
       }
     }
+
+    this.atualizarLocalStorage();
   }
 
   async incluir(newTask: string){
@@ -58,6 +63,7 @@ export class HomePage {
       toast.present();
     } else {
       this.tasks.push({description: newTask, done: false});
+      this.atualizarLocalStorage();
     }
   }
 
@@ -65,21 +71,11 @@ export class HomePage {
     task.done = !task.done;
   }
 
-  arrayParaJson(){
-    let valor = [{nome: "josé"},{nome: "carlos"}];
-    let jstring = '';
+  atualizarLocalStorage(){
+    localStorage.setItem('taskDB', JSON.stringify(this.tasks));
+  }
 
-    jstring = '[';
-
-    for(let i = 0; i < valor.length; i++){
-      jstring = jstring + "{";
-      jstring = jstring + "nome:";
-      jstring = jstring + valor[i].nome;
-      jstring = jstring + "},";
-    }
-
-    jstring = jstring + ']';
-
-    console.log(jstring);
+  lerLocalStorage(){
+    this.tasks = JSON.parse(localStorage.getItem('taskDB') || '[]');
   }
 }
