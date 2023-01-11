@@ -78,4 +78,19 @@ export class HomePage {
   lerLocalStorage(){
     this.tasks = JSON.parse(localStorage.getItem('taskDB') || '[]');
   }
+
+  toFilter(event: any){
+    this.searchValue = event.target.value.toLowerCase();
+    this.tasks = this.filterTasks(this.searchValue);
+  }
+
+  filterTasks(search: string){
+    return this.tasks.filter((i) => {
+      return i.description.toLowerCase().includes(search.toLowerCase());
+    });
+  }
+
+  toClearFilter(){
+    this.lerLocalStorage();
+  }
 }

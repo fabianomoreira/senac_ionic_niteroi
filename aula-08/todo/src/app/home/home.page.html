@@ -6,12 +6,12 @@
   </ion-toolbar>
 
   <ion-toolbar color="danger">
-    <ion-searchbar [(ngModel)] = "searchValue"></ion-searchbar>
+    <ion-searchbar [(ngModel)] = "searchValue" (keyup) = "toFilter($event)" (ionClear)="toClearFilter()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-item-sliding *ngFor="let task of tasks | filter: searchValue">
+  <ion-item-sliding *ngFor="let task of tasks">
     <ion-item (click)="alterarStatus(task)">
       <ion-label *ngIf="task.done == false">{{task.description}}</ion-label>
       <ion-label *ngIf="task.done == true"><del>{{task.description}}</del></ion-label>
